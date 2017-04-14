@@ -13,7 +13,7 @@ use Cake\Auth\DefaultPasswordHasher;
  * @property string $role
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
- *
+ * @property \App\Model\Entity\Group $group
  * @property \App\Model\Entity\Post[] $posts
  */
 class User extends Entity

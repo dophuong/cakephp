@@ -10,6 +10,12 @@ use App\Controller\AppController;
  */
 class PostsController extends AppController
 {
+    public $paginate = [
+        'limit' => 10,
+        'order' => [
+            'Posts' => 'asc'
+        ]
+    ];
 
     public function initialize(){
         parent::initialize();
@@ -22,6 +28,22 @@ class PostsController extends AppController
 
         // Set the layout
        // $this->layout = 'frontend';
+    }
+    public function isAuthorized($user)
+    {
+        // All registered users can add articles
+        if ($this->request->getParam('action') === 'addpost') {
+            return true;
+        }
+
+        // The owner of an article can edit and delete it
+        if (in_array($this->request->getParam('action'), ['edit', 'delete','view'])) {
+            $postId = (int)$this->request->getParam('pass.0');
+            if ($this->Posts->isOwnedBy($postId, $user['id'])) {
+                return true;
+            }
+        }
+        return parent::isAuthorized($user);
     }
 
     public function index()
@@ -61,7 +83,7 @@ class PostsController extends AppController
     }
     public function upost($userid)
     {
-        $query = $this->Posts->find()->contain(['Users'])->where(['user_id' => $userid] );
+        $query = $this->Posts->find()->contain(['Users'])->where(['user_id' => $userid])->order(['Posts.created'=>'DESC']);
         $uid = $this->Auth->user('id');
         $username = $this->Auth->user('username');
         $users= $this->paginate('Users');
@@ -106,10 +128,10 @@ class PostsController extends AppController
 
                 if(move_uploaded_file($this->request->data['image']['tmp_name'],$uploadFile)){
                     $post->images = $fileName;
-                    var_dump($post->images);
+//                    var_dump($post->images);
                     if ($this->Posts->save($post)) {
                         $this->Flash->success(__('The post has been saved.'));
-                        return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+                        return $this->redirect(['controller' => 'Users', 'action' => 'view',$post->user_id ]);
 
                     }else{
                         $this->Flash->error(__('The post could not be saved. Please, try again.'));
@@ -145,7 +167,7 @@ class PostsController extends AppController
                     $post->images = $fileName;
                     if ($this->Posts->save($post)) {
                         $this->Flash->success(__('The post has been saved.'));
-                        return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+                        return $this->redirect(['controller' => 'Users', 'action' => 'view',$post->user_id]);
 
                     }else{
                         $this->Flash->error(__('The post could not be saved. Please, try again.'));
@@ -181,7 +203,6 @@ class PostsController extends AppController
         } else {
             $this->Flash->error(__('The post could not be deleted. Please, try again.'));
         }
-
-        return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        return $this->redirect(['controller' => 'Users', 'action' => 'view',$post->user_id]);
     }
 }

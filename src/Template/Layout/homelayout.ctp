@@ -21,6 +21,7 @@ $cakeDescription = "PhuongDo' Blog";
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <title>
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
@@ -29,6 +30,7 @@ $cakeDescription = "PhuongDo' Blog";
     <?= $this->Html->script('jquery.js') ?>
     <?= $this->Html->script('jquery.min.js') ?>
     <?= $this->Html->script('bootstrap.min.js') ?>
+    <?= $this->Html->css('bootstrap.min.css') ?>
     <?= $this->Html->script('validator.js') ?>
     <?= $this->Html->script('validator.min.js') ?>
     <?= $this->Html->css('cake.css') ?>
@@ -39,14 +41,16 @@ $cakeDescription = "PhuongDo' Blog";
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
-
+    <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
 </head>
+
 <body>
-    <?= $this->Flash->render() ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
-    </div>
-    <footer>
-    </footer>
+
+<?= $this->Flash->render() ?>
+<div class="home">
+    <?= $this->fetch('content') ?>
+</div>
+<footer>
+</footer>
 </body>
 </html>

@@ -18,19 +18,12 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\Debugger;
 use Cake\Network\Exception\NotFoundException;
-
 ?>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <?= $this->Html->charset() ?>
-</head>
-
 <body class="home">
             <div class="modal-header" style="padding:35px 50px;">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4><span class="glyphicon glyphicon-sunglasses"></span> View post</h4>
+                <h4><span class="glyphicon glyphicon-sunglasses"></span><?=$this->Html->link('View post', ['controller' => 'Posts', 'action' => 'viewcontent', $post->id]) ?>
+                </h4>
             </div>
             <div class="modal-body" style="padding:40px 50px;">
                     <div class="form-group">

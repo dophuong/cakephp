@@ -5,10 +5,11 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Composer\DependencyResolver\Rule;
 
 /**
  * Users Model
- *
+ * @property \Cake\ORM\Association\BelongsTo $Groups
  * @property \Cake\ORM\Association\HasMany $Posts
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
@@ -40,6 +41,11 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Groups', [
+            'foreignKey' => 'role',
+            'joinType' => 'INNER'
+        ]);
+
         $this->hasMany('Posts', [
             'foreignKey' => 'user_id'
         ]);
@@ -59,20 +65,33 @@ class UsersTable extends Table
 
         $validator
             ->requirePresence('username', 'create')
-            ->notEmpty('username', 'A username is required');
-
+            ->notEmpty('username', 'A username is required')
+            ->add('username', array(
+                    'required' => array(
+                    'rule' => 'notBlank',
+                    'required' => 'create'
+                ),
+                'size' => array(
+                    'rule' => array('lengthBetween', 3, 20),
+                    'message' => 'Password should be at least 3 chars long'
+                )));
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmpty('email');
-
+            ->notEmpty('email', 'a email is required')
+            ->add('email','validFormat',[
+                "rule" => ["email", false,'/^[a-zA-Z0-9]{4,10}+@[a-zA-Z]+\.[a-zA-Z]{2,4}$/'],
+                "message" => "Email must be valid."]);
         $validator
             ->requirePresence('password', 'create')
-            ->notEmpty('password', 'A password is required');
-
-        $validator
-            ->allowEmpty('role');
-
+            ->notEmpty('password', 'A password is required')
+            ->notEmpty('confirm_password','confirm password is required')
+            ->add('password', ['length' => ['rule' => ['minLength', 5],'message' => 'Password need to be at least 5 characters long',]])
+            ->add('confirm_password',
+                'compareWith', [
+                'rule' => ['compareWith', 'password'],
+                'message' => 'Passwords not equal.'
+                ]);
         return $validator;
     }
 

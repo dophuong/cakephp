@@ -63,10 +63,72 @@ header .header-title {
     padding: 0;
     height: 200px;
     display: block;
-    background-image: url('../img/uploadbg.jpg');
     text-align: center;
-}
+    background-image: url('../img/uploadbg.jpg');
+    /*-webkit-animation: mymove 20s infinite;*/
+    /*animation: mymove 20s infinite;*/
 
+}
+/*@-webkit-keyframes mymove {*/
+    /*from {*/
+        /*background-image: url('../img/uploadbg.jpg');}*/
+    /*to {background-image: url('../img/uploadbg2.jpg') ;}*/
+/*}*/
+/*@keyframes mymove {*/
+    /*from {*/
+        /*background-image: url('../img/uploadbg.jpg');}*/
+    /*to {background-image: url('../img/uploadbg2.jpg') ;}*/
+/*}*/
+.mySlides{
+    display: none;
+}
+.p-session{
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
+}
+.p-content{
+    margin: auto;
+}
+.animate-top {
+    position: relative;
+    animation: animatetop 2s;
+    animation-duration: 2s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-name: animatetop;
+}
+.animate-bottom {
+    position: relative;
+    animation: animatebottom 2s;
+    animation-duration: 2s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-name: animatebottom;
+}
+.p-black{
+    color: #ffffff;
+    background-color: #000000;
+}
+.p-container{
+    padding-right: 16px;
+    padding-left: 16px;
+}
+.p-display-topright{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.p-display-container{
+    position: relative;
+}
 header .header-title h1 {
     font-family: 'Raleway', sans-serif;
     margin: 0px;
@@ -83,7 +145,7 @@ header h1 {
 
 h3, h4 {
     font-family: 'Roboto', sans-serif;
-    font-size: 27px;
+    font-size: 30px;
     line-height: 30px;
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
@@ -99,7 +161,7 @@ h3, h4 {
 }
 
 .row {
-    max-width: 1000px;
+    max-width: inherit;
 }
 
 .alert {
@@ -237,6 +299,6 @@ hr {
 
 @media (min-width: 992px) {
     header.row {
-        max-width: 940px;
+        max-width: inherit;
     }
 }

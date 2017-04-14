@@ -37,13 +37,14 @@ class AppController extends Controller
      *
      * @return void
      */
+    
     public function initialize()
     {
         parent::initialize();
-
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
+            'authorize' => ['Controller'],
             'loginRedirect' => [
                 'controller' => 'Pages',
                 'action' => 'display'
@@ -55,6 +56,16 @@ class AppController extends Controller
             ]
         ]);
     }
+    public function isAuthorized($user)
+    {
+        // Admin can access every action
+        if (isset($user['role']) && $user['role'] === 1) {
+            return true;
+        }
+        // Default deny
+        return false;
+    }
+
     public function beforeRender(Event $event)
     {
         if (!array_key_exists('_serialize', $this->viewVars) &&
@@ -65,6 +76,6 @@ class AppController extends Controller
     }
     public function beforeFilter(Event $event)
     {
-        $this->Auth->allow(['display','viewcontent','upost']);
+        $this->Auth->allow(['display','viewcontent','view','upost']);
     }
 }

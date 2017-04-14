@@ -8,6 +8,7 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\UsersTable $Users
  */
+
 class UsersController extends AppController
 {
 
@@ -15,10 +16,19 @@ class UsersController extends AppController
     {
         parent::initialize();
         // Add logout to the allowed actions list.
-        $this->Auth->allow(['logout', 'add','register']);
+        $this->Auth->allow(['logout','register']);
     }
 
-
+    public function isAuthorized($user)
+    {
+        if (in_array($this->request->getParam('action'), ['edit', 'delete','view'])) {
+            $userId = (int)$this->request->getParam('pass.0');
+            if ($userId == $user['id']) {
+                return true;
+            }
+        }
+        return parent::isAuthorized($user);
+    }
     public function index()
     {
         $users = $this->paginate($this->Users);
@@ -29,6 +39,10 @@ class UsersController extends AppController
 
     public function login()
     {
+        if($this->Auth->user('id')){
+            
+            $this->redirect(array('controller'=>'Pages','action'=>'display'));
+        }
 
         if ($this->request->is('post')){
             $user = $this->Auth->identify();
@@ -84,14 +98,14 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
-
                 return $this->redirect(['action' => 'register']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                    $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $this->set(compact('user'));
-        $this->set('_serialize', ['user']);
-    }
+            $groups = $this->Users->Groups->find('list');
+            $this->set(compact('user', 'groups'));
+            $this->set('_serialize', ['user']);
+        }
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
@@ -127,6 +141,7 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller' => 'Users', 'action' => 'view',$user->user_id]);
+
     }
 }

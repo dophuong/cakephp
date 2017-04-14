@@ -33,11 +33,11 @@ class PostsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-   
+
     public function initialize(array $config)
     {
         parent::initialize($config);
-
+        $this->addBehavior('Sluggable');
         $this->setTable('posts');
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
@@ -59,7 +59,10 @@ class PostsTable extends Table
             'foreignKey' => 'post_id'
         ]);
     }
-
+    public function isOwnedBy($postId, $userId)
+    {
+        return $this->exists(['id' => $postId, 'user_id' => $userId]);
+    }
     /**
      * Default validation rules.
      *
@@ -73,19 +76,35 @@ class PostsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('title');
-
+            ->notEmpty('title','A title is required')
+            ->add('title', array(
+                'required' => array(
+                    'rule' => 'notBlank',
+                    'required' => 'create'
+                )));
         $validator
             ->allowEmpty('slug');
 
         $validator
-            ->allowEmpty('summary');
-
+            ->notEmpty('summary','A summary is required')
+            ->add('summary', array(
+                'required' => array(
+                    'rule' => 'notBlank',
+                    'required' => 'create'
+        )));
         $validator
-            ->allowEmpty('content');
-
+            ->notEmpty('content','A content is required')
+            ->add('title', array(
+                    'required' => array(
+                    'rule' => 'notBlank',
+                    'required' => 'create'
+        )));
         $validator
-            ->allowEmpty('images');
+            ->allowEmpty('images')
+            ->add('images', array(
+                'required' => array(
+                    'required' => 'create'
+                )));
 
         $validator
             ->integer('is_private')
