@@ -1,10 +1,3 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<?= $this->Html->meta('icon') ?>
-<?= $this->Html->css('base.css') ?>
-<?= $this->Html->css('home.css') ?>
-<?= $this->Html->css('mycss.css') ?>
-
 <div class="modal-header" style="padding:35px 50px;">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
     <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>

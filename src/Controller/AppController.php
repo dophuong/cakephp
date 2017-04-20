@@ -16,6 +16,10 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\I18n\Time;
+use Cake\I18n\Date;
+use Cake\I18n\FrozenDate;
+use Cake\I18n\FrozenTime;
 
 /**
  * Application Controller
@@ -55,6 +59,11 @@ class AppController extends Controller
                 'home'
             ]
         ]);
+        //format time json_encode 
+        Time::setJsonEncodeFormat('yyyy-MM-dd HH:mm:ss');  // For any mutable DateTime
+        FrozenTime::setJsonEncodeFormat('yyyy-MM-dd HH:mm:ss');  // For any immutable DateTime
+        Date::setJsonEncodeFormat('yyyy-MM-dd HH:mm:ss');  // For any mutable Date
+        FrozenDate::setJsonEncodeFormat('yyyy-MM-dd HH:mm:ss');  // For any immutable Date
     }
     public function isAuthorized($user)
     {

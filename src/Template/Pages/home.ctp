@@ -49,8 +49,6 @@ endif;
              ?></h5>
 <!--        $this->request->session()->read('Auth.Users.username')!= null-->
         <h1> PhuongDo' Blog</h1>
-
-
     </div>
 </header>
 <div class="row">
@@ -62,7 +60,7 @@ endif;
                     if($p->images ) {
                         ?>
                         <h5><img src="<?= '/img/upload'.$p->images?>" width="70px"/>
-<!--                             $this->Html->link($p->title, ['controller' => 'Posts', 'action' => 'viewcontent', $p->id]) ?>-->
+                            <!--                             $this->Html->link($p->title, ['controller' => 'Posts', 'action' => 'viewcontent', $p->id]) ?>-->
                             <a href="posts/viewcontent/<?=$p->id?>" data-target="#modalPost" data-toggle="modal"><?=$p->title?></a>
                             <div class="modal fade text-center" id="modalPost">
                                 <div class="modal-dialog">
@@ -78,13 +76,13 @@ endif;
                         <p align="right">Created date : <?=$p->created?></p>
                         <?php
                     }else{?>
-                    <h5>
-<!--                         $this->Html->link($p->title, ['controller' => 'Posts', 'action' => 'viewcontent', $p->id]) ?>-->
-                        <a href="posts/view/<?=$p->id?>" data-target="#modalPost" data-toggle="modal"><?=$p->title?></a>
-                    </h5>
+                        <h5>
+                            <!--                         $this->Html->link($p->title, ['controller' => 'Posts', 'action' => 'viewcontent', $p->id]) ?>-->
+                            <a href="posts/view/<?=$p->id?>" data-target="#modalPost" data-toggle="modal"><?=$p->title?></a>
+                        </h5>
                         <p align="right">Author :  <?=$p->user->username?></p>
                         <p align="right">Created date : <?=$p->created?></p>
-                <?php }endforeach;?>
+                    <?php }endforeach;?>
         <div class="paginator">
             <ul class="pagination">
                 <?= $this->Paginator->first('<< ' . __('first')) ?>
@@ -126,6 +124,7 @@ endif;
             </div>
         </div>
     </div>
+    </div>
     <hr />
     <div class="row" style="height: auto">
         <div class="columns large-12">
@@ -137,5 +136,5 @@ endif;
 <div class="row">
     <div class="columns large-12 text-center">
         <h3 class="more">More about </h3>
-        </div>
     </div>
+</div>

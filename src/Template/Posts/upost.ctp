@@ -54,7 +54,7 @@ endif;
         foreach($post->toArray() as $p):
             ?>
         <h5><img src="<?= '/img/upload'.$p->images?>" width="70px">
-            <?=$this->Html->link($p->title, ['controller' => 'Posts', 'action' => 'view', $p->id]) ?>
+            <?=$this->Html->link($p->title,['controller'=>'Posts','action'=>'viewcontent',$p->id] )?>
         </h5>
             <?= $this->Text->truncate($p->content, 200, ['ellipsis' => '...', 'exact' => false]);?>
             <?=$this->Html->link(_('Read more'), ['controller' => 'Posts', 'action' => 'view', $p->id]) ?>
@@ -109,4 +109,3 @@ endif;
             <h3 class="more">More about </h3>
         </div>
     </div>
-

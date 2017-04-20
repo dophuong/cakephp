@@ -2,6 +2,9 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Table\CommentsTable;
+use Cake\Database\Schema\TableSchema;
+use Cake\ORM\TableRegistry;
 
 /**
  * Posts Controller
@@ -73,7 +76,7 @@ class PostsController extends AppController
         $this->set('post', $post);
         $this->set('_serialize', ['post']);
     }
-    public function viewcontent($id = null)
+    public function viewcontent($id)
     {
         $post = $this->Posts->get($id, [
             'contain' => ['Users', 'Categories', 'Comments', 'PostTags']
