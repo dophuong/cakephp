@@ -12,7 +12,6 @@
  * @since         0.10.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
 $cakeDescription = "PhuongDo' Blog";
 ?>
 <!DOCTYPE html>
@@ -33,6 +32,7 @@ $cakeDescription = "PhuongDo' Blog";
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('home.css') ?>
     <?= $this->Html->css('mycss.css') ?>
+    <?= $this->Html->css('comment.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

@@ -55,6 +55,10 @@ class CommentsTable extends Table
             'foreignKey' => 'parent_id'
         ]);
     }
+    public function isOwnedBy($commentId, $userId)
+    {
+        return $this->exists(['id' => $commentId, 'user_id' => $userId]);
+    }
 
     /**
      * Default validation rules.
@@ -69,11 +73,11 @@ class CommentsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('content');
+            ->notEmpty('content');
 
         $validator
-            ->requirePresence('author', 'create')
-            ->notEmpty('author');
+//            ->requirePresence('author', 'create')
+            ->allowEmpty('author');
 
         return $validator;
     }

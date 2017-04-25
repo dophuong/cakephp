@@ -81,8 +81,10 @@ class PostsController extends AppController
         $post = $this->Posts->get($id, [
             'contain' => ['Users', 'Categories', 'Comments', 'PostTags']
         ]);
+        $username = $this->Auth->user('username');
         $this->set('post', $post);
         $this->set('_serialize', ['post']);
+        $this->set('username',$username);
     }
     public function upost($userid)
     {

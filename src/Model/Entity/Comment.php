@@ -15,6 +15,8 @@ use Cake\ORM\Entity;
  * @property int $post_id
  *
  * @property \App\Model\Entity\Post $post
+ * @property \App\Model\Entity\User $user
+
  */
 class Comment extends Entity
 {

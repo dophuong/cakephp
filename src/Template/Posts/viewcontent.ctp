@@ -14,60 +14,32 @@
         <h4><?= __('Content') ?></h4>
         <?= $this->Text->autoParagraph(h($post->content)); ?>
     </div>
-    <h4><?= __('Comments') ?></h4>
-            <div id="divComment"></div>
-    <?= $this->Form->create('comment', array('url' => array('controller'=>'Comments','action'=>'add', $post->id ),'id'=>'commentForm')) ?>
+    <hr>
+
+        <div class="form-group" id="divComment"></div>
+
+        <div id="c-c2">
+            <?= $this->Form->create('comment', array('url' => array('controller'=>'Comments','action'=>'add', $post->id),'id'=>'commentForm')) ?>
+            <fieldset>
+                <legend><?= __('Add Comment') ?></legend>
+                <div id="parent_id"></div>
+                <?= $this->Form->control('author');?>
+                <?=$this->Form->control('content');?>
+            </fieldset>
+            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->end() ?>
+        </div>
+
+    <?= $this->Form->create('comment', array('url' => array('controller'=>'Comments','action'=>'add', $post->id),'id'=>'commentForm')) ?>
     <fieldset>
-        <legend><?= __('Add Comment') ?></legend>
+        <legend class="c-b"><?=$username?></legend>
+        <input type="hidden" name="post_id" id="post_id" value="<?=$post->id?>"/>
         <?php
-        echo $this->Form->control('author');
-        echo $this->Form->control('content');?>
+        echo $this->Form->input('parent_id',array('type' => 'hidden', 'default' => 0));
+        echo $this->Form->input('content', array('type'=>'textarea'));?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
+<script> var myUrl='<?=$this->Url->build('/') ?>'</script>
+<?= $this->Html->script('comment.js') ?>
 </div>
-
-<script>
-    $(document).ready(function () {
-        loadComment();
-        $('#commentForm').submit(function () {
-            var formData = $('#commentForm').serialize()+"&post_id=<?=$post->id?>";
-            var formUrl = $(this).attr('action');
-            $.ajax({
-                type:"POST",
-                url:formUrl,
-                data:formData,
-                success: function (data) {
-              console.log(data);
-                    loadComment();
-                }
-            });
-            return false;
-        });
-    });
-
-    function loadComment() {
-        $.ajax({
-        type:"GET",
-            url:"<?=$this->Url->build(['controller' => 'comments', 'action' => 'getcomment',$post->id]); ?>",
-            success: function (data) {
-//                console.log(data);
-                showComment(data);
-            }
-        });
-        return false;
-    }
-    function showComment(data) {
-        var html = "";
-        data.forEach(function (comment) {
-            aut = comment.author;
-            cont = comment.content;
-            cre = comment.created;
-            console.log(cre);
-            mod = comment.modified;
-//            console.log(cont);
-            html ='<fieldset><legend style="color: #2a6496 ; font-size: 20px">'+aut+'  <p style="font-size: small"> '+cre+'</p></legend><p>'+cont+'</p></fieldset>';
-            $('#divComment').append(html);
-        })
-    }
-</script>
