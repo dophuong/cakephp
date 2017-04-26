@@ -39,21 +39,19 @@ class CommentsTable extends Table
         $this->setTable('comments');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
-
         $this->addBehavior('Timestamp');
-
-        $this->belongsTo('ParentComments', [
-            'className' => 'Comments',
-            'foreignKey' => 'parent_id'
-        ]);
+//        $this->belongsTo('ParentComments', [
+//            'className' => 'Comments',
+//            'foreignKey' => 'parent_id'
+//        ]);
         $this->belongsTo('Posts', [
             'foreignKey' => 'post_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('ChildComments', [
-            'className' => 'Comments',
-            'foreignKey' => 'parent_id'
-        ]);
+//        $this->hasMany('ChildComments', [
+//            'className' => 'Comments',
+//            'foreignKey' => 'parent_id'
+//        ]);
     }
     public function isOwnedBy($commentId, $userId)
     {
@@ -76,7 +74,7 @@ class CommentsTable extends Table
             ->notEmpty('content');
 
         $validator
-//            ->requirePresence('author', 'create')
+            ->requirePresence('author', 'create')
             ->allowEmpty('author');
 
         return $validator;
@@ -91,9 +89,8 @@ class CommentsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['parent_id'], 'ParentComments'));
+//        $rules->add($rules->existsIn(['parent_id'], 'ParentComments'));
         $rules->add($rules->existsIn(['post_id'], 'Posts'));
-
         return $rules;
     }
 }

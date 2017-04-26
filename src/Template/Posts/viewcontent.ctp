@@ -1,10 +1,10 @@
 <?php $this->layout = 'homelayout';?>
 <div class="modal-header" style="padding:35px 50px;">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <h4><span class="glyphicon glyphicon-sunglasses"></span><?=$this->Html->link( " ". $post->title, ['controller' => 'Posts', 'action' => 'viewcontent', $post->id]) ?>
+    <h4><span class="glyphicon glyphicon-sunglasses"></span>
+        <?=$this->Html->link( " ". $post->title, ['controller' => 'Posts', 'action' => 'viewcontent', $post->id]) ?>
     </h4>
 </div>
-
 <div class="modal-body" style="padding:40px 50px;">
     <div class="form-group">
         <h4><?= __('Summary') ?></h4>
@@ -15,28 +15,15 @@
         <?= $this->Text->autoParagraph(h($post->content)); ?>
     </div>
     <hr>
-
-        <div class="form-group" id="divComment"></div>
-
-        <div id="c-c2">
-            <?= $this->Form->create('comment', array('url' => array('controller'=>'Comments','action'=>'add', $post->id),'id'=>'commentForm')) ?>
-            <fieldset>
-                <legend><?= __('Add Comment') ?></legend>
-                <div id="parent_id"></div>
-                <?= $this->Form->control('author');?>
-                <?=$this->Form->control('content');?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
-        </div>
-
-    <?= $this->Form->create('comment', array('url' => array('controller'=>'Comments','action'=>'add', $post->id),'id'=>'commentForm')) ?>
+    <div class="form-group" id="divComment"></div>
+    <input id="user" type="hidden" value="<?=$username?>"/>
+    <input id="buttonShowForm" class="c-c4 btn btn-link" type="button" onclick="replyComment(this, 0)" value="Comment"/>
+    <?= $this->Form->create('comment', array('id'=>'commentForm','style'=>'display:none')) ?>
     <fieldset>
         <legend class="c-b"><?=$username?></legend>
-        <input type="hidden" name="post_id" id="post_id" value="<?=$post->id?>"/>
-        <?php
-        echo $this->Form->input('parent_id',array('type' => 'hidden', 'default' => 0));
-        echo $this->Form->input('content', array('type'=>'textarea'));?>
+        <input type="hidden" name="postId" id="postId" value="<?=$post->id?>"/>
+        <input name="parent_id" id="parent_id" value='' type="text">
+        <?= $this->Form->input('content', array('type'=>'textArea'));?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>

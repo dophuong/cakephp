@@ -65,7 +65,7 @@ class UsersController extends AppController
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
     }
-    public function viewuser($id = null)
+    public function viewUser($id = null)
     {
         $user = $this->Users->get($id, [
             'contain' => ['Posts']

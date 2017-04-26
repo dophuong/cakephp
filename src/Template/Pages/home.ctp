@@ -47,7 +47,6 @@ endif;
             <?php
             }
              ?></h5>
-<!--        $this->request->session()->read('Auth.Users.username')!= null-->
         <h1> PhuongDo' Blog</h1>
     </div>
 </header>
@@ -60,7 +59,6 @@ endif;
                     if($p->images ) {
                         ?>
                         <h5><img src="<?= '/img/upload'.$p->images?>" width="70px"/>
-                            <!--                             $this->Html->link($p->title, ['controller' => 'Posts', 'action' => 'viewcontent', $p->id]) ?>-->
                             <a href="posts/viewcontent/<?=$p->id?>" data-target="#modalPost" data-toggle="modal"><?=$p->title?></a>
                             <div class="modal fade text-center" id="modalPost">
                                 <div class="modal-dialog">
@@ -77,8 +75,7 @@ endif;
                         <?php
                     }else{?>
                         <h5>
-                            <!--                         $this->Html->link($p->title, ['controller' => 'Posts', 'action' => 'viewcontent', $p->id]) ?>-->
-                            <a href="posts/view/<?=$p->id?>" data-target="#modalPost" data-toggle="modal"><?=$p->title?></a>
+                            <a href="posts/viewcontent/<?=$p->id?>" data-target="#modalPost" data-toggle="modal"><?=$p->title?></a>
                         </h5>
                         <p align="right">Author :  <?=$p->user->username?></p>
                         <p align="right">Created date : <?=$p->created?></p>
@@ -98,9 +95,9 @@ endif;
         <h4>List of users</h4>
         <?php
         foreach ($users as $user):
-        $userid = $user->id;
+        $userId = $user->id;
         ?>
-        <h5><span class="glyphicon glyphicon-user"></span><?=$this->Html->link(" ".$user->username, ['controller' => 'Posts', 'action' => 'upost', $userid]) ?></h5>
+        <h5><span class="glyphicon glyphicon-user"></span><?=$this->Html->link(" ".$user->username, ['controller' => 'Posts', 'action' => 'upost', $userId]) ?></h5>
         <?php endforeach;?>
         <div class="p-content p-display-container" style = "max-width: 400px ; max-height: 200px">
 

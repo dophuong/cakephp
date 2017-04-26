@@ -1,5 +1,8 @@
 <?php
 namespace App\Controller;
+use Cake\Error\Debugger;
+use Cake\ORM\TableRegistry;
+
 //use App\Controller\AppController;
 //use Cake\Core\Exception\Exception;
 /**
@@ -14,15 +17,14 @@ class CommentsController extends AppController
     {
         parent::initialize();
         // Add logout to the allowed actions list.
-        $this->Auth->allow(['getcomment']);
+        $this->Auth->allow(['getComment']);
     }
     public function isAuthorized($user)
     {
         // All registered users can add articles
-        if (in_array($this->request->getParam('action'),['add','getcomment'])){
+        if ($this->request->getParam('action') === 'add') {
             return true;
         }
-
         // The owner of an article can edit and delete it
         if (in_array($this->request->getParam('action'), ['edit', 'delete','view'])) {
             $commentId = (int)$this->request->getParam('pass.0');
@@ -45,12 +47,10 @@ class CommentsController extends AppController
         $this->set(compact('comments'));
         $this->set('_serialize', ['comments']);
     }
-
     /**
      * View method
      *
      * @param string|null $id Comment id.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -63,39 +63,44 @@ class CommentsController extends AppController
     }
     /**
      * Add method
-     * @param int $post_id
+     * @param int $postId
+     * @return \Cake\Http\Response|null
      */
-    public function add($post_id)
+    public function add($postId)
     {
-
-        if ($this->request->is('post')) {
-            $comment = $this->Comments->newEntity();
-            $data =  $this->request->getData();
-            $comment->post_id = $post_id;
-            $comment->author = $this->Auth->user('username');
-            $comment = $this->Comments->patchEntity($comment,$data);
-            if($this->Comments->save($comment)) {
-                $this->Flash->success(__('The comment has been saved.'));
-//                $status = "success";
-                return $this->redirect(['controller'=>'comments','action' => 'getcomment'],$post_id);
+            if ($this->request->is('post')){
+                if (!empty($this->request->getData())) {
+                    $comment =$this->Comments->newEntity();
+                    $comment = $this->Comments->patchEntity($comment, $this->request->getData());
+                    $comment->author = $this->Auth->user('username');
+                    $comment->post_id = $postId;
+                    if ($this->Comments->save($comment)) {
+                        $json = json_encode(array('success' => 'true'));
+                    } else {
+                        $json = json_encode(array('success' => 'fail'));
+                    }
+                }else {
+                    $json = json_encode(array('success' => 'false'));
+                }
+            }else {
+                $json = json_encode(array('success' => 'cannot post'));
             }
-            $this->Flash->error(__('The comment could not be saved. Please, try again.'));
-            
-            return $this->redirect(['controller'=>'comments','action' => 'getcomment'],$post_id);
-        }
-        $posts = $this->Comments->Posts->find('list', ['limit' => 200]);
-        $this->set(compact('comment', 'posts'));
-        $this->set('_serialize', ['comment']);
+        $this->response->body($json);
+        $this->response->type('json');
+        return $this->response;
     }
 
     /**
-     * getcomment method
-     * @param int $post_id
+     * getComment method
+     * @param int $postId
      * @return \Cake\Http\Response|null
      */
-    public function getComment($post_id){
+    public function getComment($postId){
         $this->autoRender = false;
-        $comment = $this->Comments->find()->contain(['Posts'])->where(['post_id' => $post_id])->order(['Comments.created'=>'ASC']);
+        $comment = $this->Comments->find()
+            ->contain(['Posts'])
+            ->where(['post_id' => $postId])
+            ->order(['Comments.created'=>'ASC']);
 //         convert object => json
 //        $json = json_encode($myObject);=>{"a":"b"....}
 //        convert json => object
@@ -111,6 +116,7 @@ class CommentsController extends AppController
      * Edit method
      *
      * @param string|null $id Comment id.
+     * @return \Cake\Http\Response|null
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)

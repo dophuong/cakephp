@@ -64,7 +64,6 @@ class PostsController extends AppController
      * View method
      *
      * @param string|null $id Post id.
-     * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
@@ -76,7 +75,7 @@ class PostsController extends AppController
         $this->set('post', $post);
         $this->set('_serialize', ['post']);
     }
-    public function viewcontent($id)
+    public function viewContent($id)
     {
         $post = $this->Posts->get($id, [
             'contain' => ['Users', 'Categories', 'Comments', 'PostTags']
@@ -86,14 +85,16 @@ class PostsController extends AppController
         $this->set('_serialize', ['post']);
         $this->set('username',$username);
     }
-    public function upost($userid)
+    public function uPost($userId)
     {
-        $query = $this->Posts->find()->contain(['Users'])->where(['user_id' => $userid])->order(['Posts.created'=>'DESC']);
+        $query = $this->Posts->find()->contain(['Users'])
+            ->where(['user_id' => $userId])
+            ->order(['Posts.created'=>'DESC']);
         $uid = $this->Auth->user('id');
         $username = $this->Auth->user('username');
         $users= $this->paginate('Users');
         $this->set(compact('uid','username','users'));
-        if($uid != $userid){
+        if($uid != $userId){
             $query->where(['is_private' => 0]);
         }
         $this->set('post', $this->paginate($query));
@@ -116,11 +117,10 @@ class PostsController extends AppController
         $this->set('_serialize', ['post']);
     }
 
-    public function addpost()
+    public function addPost()
     {
         $post = $this->Posts->newEntity();
         if ($this->request->is('post')) {
-
             if($this->request->data['image']['name']){
                 $fileName = $this->request->data['image']['name'];
                 $uploadPath = "img/upload";
@@ -130,7 +130,6 @@ class PostsController extends AppController
                 $uploadFile = $uploadPath.$fileName;
                 $post = $this->Posts->patchEntity($post, $this->request->getData());
                 $post->user_id = $this->Auth->user('id');
-
                 if(move_uploaded_file($this->request->data['image']['tmp_name'],$uploadFile)){
                     $post->images = $fileName;
 //                    var_dump($post->images);

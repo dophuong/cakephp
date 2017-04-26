@@ -59,7 +59,10 @@ class PagesController extends AppController
         $users= $this->paginate('Users');
         $id = $this->Auth->user('id');
         $username = $this->Auth->user('username');
-        $query = $posts->find()->contain(['Users'])->where(['is_private' => 0])->orWhere (['user_id' => $id],['is_private' => 1])->order(['Posts.created'=>'DESC']);
+        $query = $posts->find()->contain(['Users'])
+            ->where(['is_private' => 0])
+            ->orWhere (['user_id' => $id],['is_private' => 1])
+            ->order(['Posts.created'=>'DESC']);
         $this->set('post', $this->paginate($query));
         
         $this->set(compact('users','id','username'));
