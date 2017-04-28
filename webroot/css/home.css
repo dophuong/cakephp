@@ -16,7 +16,14 @@
     line-height: 27px;
     color: #404041;
 }
-
+body .page .row{
+    margin: auto;
+    max-width: 102.5rem;
+}
+body .page .home{
+    margin: auto;
+    max-width: 102.5rem;
+}
 a {
     color: #0071BC;
     -webkit-transition: all 0.2s;
@@ -38,7 +45,24 @@ a:hover, a:active {
 ul, ol, dl, p {
     font-size: 0.85rem;
 }
-
+.p-title h5{
+    padding: 10px;
+    padding-left: 10px;
+}
+.p-img img{
+    width: 100%;
+    height: auto;
+    /*max-width: 200px;*/
+    /*max-height: 100px;*/
+}
+.pa p {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.6;
+    margin-bottom: 0;
+    text-rendering: optimizeLegibility;
+}
 p {
     line-height: 2;
 }
@@ -69,16 +93,6 @@ header .header-title {
     /*animation: mymove 20s infinite;*/
 
 }
-/*@-webkit-keyframes mymove {*/
-    /*from {*/
-        /*background-image: url('../img/uploadbg.jpg');}*/
-    /*to {background-image: url('../img/uploadbg2.jpg') ;}*/
-/*}*/
-/*@keyframes mymove {*/
-    /*from {*/
-        /*background-image: url('../img/uploadbg.jpg');}*/
-    /*to {background-image: url('../img/uploadbg2.jpg') ;}*/
-/*}*/
 .mySlides{
     display: none;
 }
@@ -301,4 +315,11 @@ hr {
     header.row {
         max-width: inherit;
     }
+}
+.img{
+    display: inline-block;
+    vertical-align: middle;
+    width: 50%;
+    height: 50%;
+
 }

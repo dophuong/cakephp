@@ -32,7 +32,7 @@ class UsersController extends AppController
     public function index()
     {
         $users = $this->paginate($this->Users);
-
+        
         $this->set(compact('users'));
         $this->set('_serialize', ['users']);
     }
@@ -61,16 +61,15 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => ['Posts']
         ]);
-
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
     }
     public function viewUser($id = null)
     {
+        
         $user = $this->Users->get($id, [
             'contain' => ['Posts']
         ]);
-
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
     }

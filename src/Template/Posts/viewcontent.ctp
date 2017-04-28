@@ -1,4 +1,4 @@
-<?php $this->layout = 'homelayout';?>
+<?php $this->layout = 'default';?>
 <div class="modal-header" style="padding:35px 50px;">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
     <h4><span class="glyphicon glyphicon-sunglasses"></span>
@@ -17,12 +17,12 @@
     <hr>
     <div class="form-group" id="divComment"></div>
     <input id="user" type="hidden" value="<?=$username?>"/>
-    <input id="buttonShowForm" class="c-c4 btn btn-link" type="button" onclick="replyComment(this, 0)" value="Comment"/>
+    <input class="c-c4 btn btn-link" type="button" onclick="replyComment(this, 0)" value="Comment"/>
     <?= $this->Form->create('comment', array('id'=>'commentForm','style'=>'display:none')) ?>
     <fieldset>
         <legend class="c-b"><?=$username?></legend>
         <input type="hidden" name="postId" id="postId" value="<?=$post->id?>"/>
-        <input name="parent_id" id="parent_id" value='' type="text">
+        <input type="hidden" name="parent_id" id="parent_id" value=''>
         <?= $this->Form->input('content', array('type'=>'textArea'));?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

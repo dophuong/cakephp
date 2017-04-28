@@ -71,9 +71,10 @@ class PostsController extends AppController
         $post = $this->Posts->get($id, [
             'contain' => ['Users', 'Categories', 'Comments', 'PostTags']
         ]);
-
-        $this->set('post', $post);
+        $user = (object)($this->Auth->user());
+        $this->set(compact('user','post'));
         $this->set('_serialize', ['post']);
+
     }
     public function viewContent($id)
     {

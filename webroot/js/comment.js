@@ -4,20 +4,21 @@
 
 var that = this;
 $(document).ready(function(){
-
     loadComment();
-    var $formComment =  $('#commentForm');
-
-    $("#buttonShowForm").click(function() {
-        if($('#user').val()){
-            $("#commentForm").show();
-        }else {
-            alert('You have to login before comment !');
-            window.location.href = myUrl+'users/login';
-        }
-    });
+    var $formComment = $('#commentForm');
+    //
+    // $("#buttonShowForm").click(function() {
+    //     if($('#user').val()){
+    //         $("#commentForm").show();
+    //     }else {
+    //         alert('You have to login before comment !');
+    //         window.location.href = myUrl+'users/login';
+    //     }
+    // });
     that.replyComment = function (element, parentId) {
         var $reply = $(element);
+        $formComment.find('#content').val('');
+
         if($('#user').val()){
             $formComment.insertAfter($reply);
             $formComment
@@ -31,30 +32,38 @@ $(document).ready(function(){
         }
     }
 
-    $formComment.submit(function () {
-        //$formComment.hide();
-        var postId = $('#postId').val();
+    $formComment.submit(function (e) {
+        $formComment.hide();
+        validateComment();
+        e.preventDefault();
         var formData = $formComment.serialize();
         $.ajax({
-            type:"POST",
-            url: myUrl + "comments/add/"+postId+"",
-            data:formData,
+            type: "POST",
+            url: myUrl + "comments/add/" + $('#postId').val() + "",
+            data: formData,
             success: function (data) {
+                $formComment.hide()
+                    .insertAfter($('#divComment')) ;
+
                 loadComment();
             }
         });
         return false;
     });
 
-
-
+    function validateComment() {
+       var x = document.forms['commentForm']['content'].value;
+        if(x == ""){
+            alert('Please fill content comment');
+            return false;
+        }
+    }
 });
 
 function loadComment() {
-    var postId = $('#postId').val();
     $.ajax({
         type:"GET",
-        url : myUrl+"comments/getComment/"+postId+"",
+        url : myUrl+"comments/getComment/"+ $('#postId').val()+"",
         success: function (data) {
             $('#divComment').empty();
             $('#divComment').append(treeLine(data));
@@ -74,14 +83,13 @@ function treeLine(data){
             }
                 tree[comment.parent_id].push(comment);
         } else {
-            console.log(typeof tree[0]);
             if(typeof tree[0] !== 'object') { // kiem tra co phai la array, object
                 tree[0] = [];
             }
             tree[0].push(comment);
         }
     });
-console.log(tree);
+// console.log(tree);
     return forEachTree(tree, 0, 0);
 }
 
@@ -90,7 +98,7 @@ function forEachTree(tree, comment_parent_id, level) {
 
     $.each(tree[comment_parent_id], function(index, comment) {
         html += '<div class="c-c2">'.repeat(level);
-        html += showCommentTree(tree, comment);
+        html += showCommentTree(comment);
         html += '</div>'.repeat(level);
         html += forEachTree(tree, comment.id, level + 1); // in ra cac con cua comment dang kiem tra
     });
@@ -98,18 +106,18 @@ function forEachTree(tree, comment_parent_id, level) {
     return html;
 }
 
-function showCommentTree(tree, comment) {
+function showCommentTree( comment) {
     aut = comment.author;
     cont = comment.content;
     cre = comment.created;
     mod = comment.modified;
     pa = comment.id;
     html ='<img src="/img/icon.png" width="30px"/>' +
-        '<b class="c-b">'+aut + ' ' + comment.id + ' ' + comment.parent_id +'   '+'</b>' +
+        '<b class="c-b">'+aut +' </b>' +
         '<small class="c-small">'+cre+'</small>' +
         '<div class="c-c2">' +
-        '<p class="c-c4" style="font-size: 15px; margin: 0px; padding: 0px">'+cont+'</p>' +
-        '<input class="c-c4 btn btn-link" onclick="replyComment(this, '+pa+')" type="submit" value="Reply"/>'+
+        '<p class="c-c4" style="font-size: 15px">'+cont+'</p>' +
+        '<input class="c-c4 btn btn-link" onclick="replyComment(this, '+pa+')"  type="button" value="Reply"/>'+
         '<hr /></div>';
     return html;
 }

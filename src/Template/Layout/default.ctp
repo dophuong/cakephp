@@ -37,14 +37,17 @@ $cakeDescription = "PhuongDo' Blog";
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
 
 </head>
 <body>
+<div class="page">
     <?= $this->Flash->render() ?>
-    <div class="container clearfix">
+    <div class="home">
         <?= $this->fetch('content') ?>
     </div>
     <footer>
     </footer>
+</div>
 </body>
 </html>
