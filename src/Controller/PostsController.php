@@ -22,7 +22,7 @@ class PostsController extends AppController
 
     public function initialize(){
         parent::initialize();
-
+        $this->Auth->allow(['index','view']);
         // Include the FlashComponent
         $this->loadComponent('Flash');
 
@@ -46,7 +46,6 @@ class PostsController extends AppController
                 return true;
             }
         }
-        return parent::isAuthorized($user);
     }
 
     public function index()

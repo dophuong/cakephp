@@ -12,42 +12,38 @@
  * @since         0.10.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-$cakeDescription = "PhuongDo' Blog";
+$description = "PhuongDo'Blog";
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <title>
-        <?= $cakeDescription ?>:
+        <?= $description ?>:
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
     <?= $this->Html->script('jquery.js') ?>
     <?= $this->Html->script('jquery.min.js') ?>
     <?= $this->Html->script('bootstrap.min.js') ?>
-    <?= $this->Html->css('cake.css') ?>
-    <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('home.css') ?>
+    <?= $this->Html->css('dashboard.css') ?>
     <?= $this->Html->css('mycss.css') ?>
     <?= $this->Html->css('comment.css') ?>
-
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
     <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
-
 </head>
 <body>
-<div class="page">
+<div class="top">
+    <div class="logo"><?= $description ?></div>
+</div>
     <?= $this->Flash->render() ?>
-    <div class="home">
-        <?= $this->fetch('content') ?>
-    </div>
+    <?= $this->fetch('content') ?>
     <footer>
     </footer>
-</div>
 </body>
 </html>

@@ -11,6 +11,7 @@
 }
 
 .home {
+
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     line-height: 27px;
@@ -23,6 +24,22 @@ body .page .row{
 body .page .home{
     margin: auto;
     max-width: 102.5rem;
+}
+.top {
+    position: fixed;
+    padding-top: 20px;
+    z-index: 2;
+    background-image: url('../img/uploadbg.jpg');
+    width: 100%;
+    height: 70px;
+    padding-left: 20px;
+}
+.logo {
+    font-family: fontawesome;
+    line-height: 1;
+    font-size: 30px;
+    display: block;
+    color: #a81813;
 }
 a {
     color: #0071BC;
@@ -43,7 +60,7 @@ a:hover, a:active {
 }
 
 ul, ol, dl, p {
-    font-size: 0.85rem;
+    font-size: 15px;
 }
 .p-title h5{
     padding: 10px;
@@ -52,8 +69,8 @@ ul, ol, dl, p {
 .p-img img{
     width: 100%;
     height: auto;
-    /*max-width: 200px;*/
-    /*max-height: 100px;*/
+    max-width: 300px;
+    max-height: 200px;
 }
 .pa p {
     font-family: inherit;
@@ -70,7 +87,7 @@ p {
 header {
     height: auto;
     line-height: 1em;
-    padding: 1px;
+    /*padding: 1px;*/
     box-shadow: none;
 }
 
@@ -82,16 +99,33 @@ header .header-image {
     text-align: center;
     padding: 64px 0;
 }
-
-header .header-title {
-    padding: 0;
+.header-title {
+    position: fixed;
+    z-index: 2;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
     height: 200px;
-    display: block;
     text-align: center;
     background-image: url('../img/uploadbg.jpg');
     /*-webkit-animation: mymove 20s infinite;*/
     /*animation: mymove 20s infinite;*/
-
+}
+@media (min-width: 768px) {
+    .header-title {
+        width: 750px;
+    }
+}
+@media (min-width: 992px) {
+     .header-title {
+        width: 970px;
+    }
+}
+@media (min-width: 1200px) {
+    .header-title {
+        width: 1170px;
+    }
 }
 .mySlides{
     display: none;
@@ -303,13 +337,17 @@ hr {
     font-size: 39px;
 }
 
-@media (min-width: 768px) {
+@media only screen and (max-width: 768px) {
+    .container
+    [class*="col-"] {
+        width: 100%;
+        }
+    }
+
     .columns {
         padding-left: 30px;
         padding-right: 30px;
-
     }
-}
 
 @media (min-width: 992px) {
     header.row {
@@ -322,4 +360,7 @@ hr {
     width: 50%;
     height: 50%;
 
+}
+.post-item {
+    margin-bottom: 10px;
 }

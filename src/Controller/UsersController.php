@@ -16,7 +16,7 @@ class UsersController extends AppController
     {
         parent::initialize();
         // Add logout to the allowed actions list.
-        $this->Auth->allow(['logout','register']);
+        $this->Auth->allow(['logout','register','index','view']);
     }
 
     public function isAuthorized($user)
@@ -27,7 +27,11 @@ class UsersController extends AppController
                 return true;
             }
         }
-        return parent::isAuthorized($user);
+        if (in_array($this->request->getParam('action'), ['add'])){
+            if(isset($user['role']) && ($user['role']==1)){
+                return true;
+            }
+        }
     }
     public function index()
     {

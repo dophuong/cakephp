@@ -11,6 +11,17 @@ use App\Controller\AppController;
 class CategoriesController extends AppController
 {
 
+
+    public function isAuthorized($user)
+    {
+        // All registered users can add articles
+        if ($this->request->getParam('action') === 'add') {
+            return true;
+        }
+        if (isset($user['role']) && $user['role'] === 1) {
+            return true;
+        }
+    }
     /**
      * Index method
      *

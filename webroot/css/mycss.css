@@ -6,7 +6,7 @@
 }
 .modal-body {
     text-align: left;
-    font-size: 30px;
+    /*font-size: 30px;*/
 }
 .modal-header,h4.close {
     background-color: #b1e3fa;

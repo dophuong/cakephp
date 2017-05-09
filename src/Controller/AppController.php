@@ -41,7 +41,6 @@ class AppController extends Controller
      *
      * @return void
      */
-    
     public function initialize()
     {
         parent::initialize();
@@ -67,6 +66,18 @@ class AppController extends Controller
     }
     public function isAuthorized($user)
     {
+        if (in_array($this->request->getParam('action'), ['edit', 'delete','view'])) {
+            $postId = (int)$this->request->getParam('pass.0');
+            if ($this->Posts->isOwnedBy($postId, $user['id'])) {
+                return true;
+            }
+        }
+        if (in_array($this->request->getParam('action'), ['edit', 'delete','view'])) {
+            $userId = (int)$this->request->getParam('pass.0');
+            if ($userId == $user['id']) {
+                return true;
+            }
+        }
         // Admin can access every action
         if (isset($user['role']) && $user['role'] === 1) {
             return true;
@@ -74,7 +85,6 @@ class AppController extends Controller
         // Default deny
         return false;
     }
-
     public function beforeRender(Event $event)
     {
         if (!array_key_exists('_serialize', $this->viewVars) &&
@@ -85,6 +95,6 @@ class AppController extends Controller
     }
     public function beforeFilter(Event $event)
     {
-        $this->Auth->allow(['display','viewcontent','upost']);
+        $this->Auth->allow(['display','viewcontent','uPost']);
     }
 }
