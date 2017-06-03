@@ -47,7 +47,7 @@ $this->layout = 'homeLayout';
     </div>
 </header>
 <content class="row">
-    <div class="container"  style="padding-top: 200px">
+    <div class="container">
         <div class="col-md-9">
             <h4>Categories</h4>
             <?php foreach($post->toArray() as $p):?>

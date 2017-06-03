@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="122051845">
+  <component name="DataSourceManagerImpl" format="xml" hash="448719012">
     <data-source source="LOCAL" name="MySQL - mycake@localhost" uuid="6877a7ad-ad3f-432b-83c0-ef467d7a6af0">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>

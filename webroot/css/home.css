@@ -100,8 +100,8 @@ header .header-image {
     padding: 64px 0;
 }
 .header-title {
-    position: fixed;
-    z-index: 2;
+    /*position: fixed;*/
+    /*z-index: 2;*/
     margin-right: auto;
     margin-left: auto;
     padding-left: 15px;
